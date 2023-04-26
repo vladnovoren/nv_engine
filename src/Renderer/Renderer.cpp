@@ -1,2 +1,7 @@
-#include "Renderer.hpp"
+#include "Renderer/Renderer.hpp"
 
+using namespace nv_engine;
+
+eRendererAPI Renderer::GetRendererAPI() {
+  return renderer_API_;
+}

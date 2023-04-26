@@ -31,10 +31,34 @@ add_definitions(
 add_library(Renderer STATIC
 )
 
+target_compile_options(Renderer PRIVATE
+  -Wall
+  -Wextra
+  -Wpedantic
+  -Werror
+)
+
 target_sources(Renderer PUBLIC
   src/Renderer/Renderer.cpp
+
+  src/Renderer/Buffers/AIndexBuffer.cpp
+  src/Renderer/Buffers/AVertexBuffer.cpp
+  src/Renderer/Buffers/BufferLayout.cpp
+  
+  src/Renderer/RendererAPIs/OpenGL/OpenGL_RendererAPI.cpp
+
+  src/Renderer/RendererAPIs/OpenGL/Buffers/OpenGL_IndexBuffer.cpp
+  src/Renderer/RendererAPIs/OpenGL/Buffers/OpenGL_VertexArray.cpp
+  src/Renderer/RendererAPIs/OpenGL/Buffers/OpenGL_VertexBuffer.cpp
 )
 
 target_include_directories(Renderer PRIVATE
-  inc/Renderer/*
+  inc/Renderer/
+  inc/Renderer/Buffers/
+  
+  inc/Renderer/RendererAPIs/
+  inc/Renderer/RendererAPIs/OpenGL/
+  inc/Renderer/RendererAPIs/OpenGL/Buffers
+
+  inc/Tools
 )
