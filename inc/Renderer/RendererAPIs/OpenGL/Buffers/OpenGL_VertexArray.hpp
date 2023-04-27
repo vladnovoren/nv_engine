@@ -8,6 +8,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <vector>
+#include <stdexcept>
 
 namespace nv_engine {
 [[maybe_unused]] static unsigned int OpenGL_GetShaderDataAtomicType(
@@ -44,10 +45,9 @@ public:
   void AddVertexBuffer(const AVertexBuffer& buffer) override;
 
 private:
-  void BindAttribute(const BufferAttribute& attribute, size_t& index, size_t stride);
-  void BindFloatAttribute(const BufferAttribute& attribute, size_t& index, size_t stride);
-  void BindIntAttribute(const BufferAttribute& attribute, size_t& index, size_t stride);
-  void BindMatrixAttribute(const BufferAttribute& attribute, size_t& index, size_t stride);
+  void BindAttribute(const BufferAttribute& attribute, size_t index, size_t stride);
+  void BindFloatAttribute(const BufferAttribute& attribute, size_t index, size_t stride);
+  void BindIntAttribute(const BufferAttribute& attribute, size_t index, size_t stride);
 
 private:
   unsigned int vao_id_;
