@@ -18,9 +18,9 @@ void VertexArray_OpenGL::Unbind() const {
   glBindVertexArray(0);
 }
 
-void VertexArray_OpenGL::AddVertexBuffer(const AVertexBuffer &buffer) {
-  VAO_BindGuard vao_bind(*this);
-  VBO_BindGuard vbo_bind(buffer);
+void VertexArray_OpenGL::AddVertexBuffer(const AVertexBuffer& buffer) {
+  Bind();
+  buffer.Bind();
 
   const auto &layout = buffer.GetLayout();
   const auto &attributes = layout.GetAttributes();
@@ -29,6 +29,11 @@ void VertexArray_OpenGL::AddVertexBuffer(const AVertexBuffer &buffer) {
     BindAttribute(attribute, index, layout.GetStride());
     ++index;
   }
+}
+
+void VertexArray_OpenGL::AddIndexBuffer(const AIndexBuffer& buffer) {
+  Bind();
+  buffer.Bind();
 }
 
 void VertexArray_OpenGL::BindAttribute(const BufferAttribute &attribute,

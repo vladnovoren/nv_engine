@@ -41,9 +41,12 @@ target_compile_options(Renderer PRIVATE
 target_sources(Renderer PUBLIC
   src/Renderer/Renderer.cpp
 
+  src/Renderer/Buffers/ABuffer.cpp
   src/Renderer/Buffers/AIndexBuffer.cpp
   src/Renderer/Buffers/AVertexBuffer.cpp
   src/Renderer/Buffers/BufferLayout.cpp
+  src/Renderer/Buffers/AVertexArray.cpp
+  src/Renderer/Buffers/ABindable.cpp
   
   src/Renderer/RendererAPIs/OpenGL/OpenGL_RendererAPI.cpp
 

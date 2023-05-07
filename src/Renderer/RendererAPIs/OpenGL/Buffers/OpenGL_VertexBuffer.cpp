@@ -2,9 +2,13 @@
 
 using namespace nv_engine;
 
-OpenGL_VertexBuffer::OpenGL_VertexBuffer() { glCreateBuffers(1, &vbo_id_); }
+OpenGL_VertexBuffer::OpenGL_VertexBuffer() {
+  glCreateBuffers(1, &vbo_id_);
+}
 
-OpenGL_VertexBuffer::~OpenGL_VertexBuffer() { glDeleteBuffers(1, &vbo_id_); }
+OpenGL_VertexBuffer::~OpenGL_VertexBuffer() {
+  glDeleteBuffers(1, &vbo_id_);
+}
 
 void OpenGL_VertexBuffer::Bind() const {
   glBindBuffer(GL_ARRAY_BUFFER, vbo_id_);
