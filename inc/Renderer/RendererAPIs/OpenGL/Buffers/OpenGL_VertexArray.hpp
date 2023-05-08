@@ -42,8 +42,13 @@ namespace nv_engine {
     void Bind() const override;
     void Unbind() const override;
 
-    void AddVertexBuffer(const AVertexBuffer& buffer) override;
-    void AddIndexBuffer(const AIndexBuffer& buffer) override;
+    void AddVertexBuffer(std::shared_ptr<const AVertexBuffer> buffer) override;
+    void SetIndexBuffer(std::shared_ptr<const AIndexBuffer> buffer) override;
+
+    const std::vector<std::shared_ptr<const AVertexBuffer>>&
+    GetVertexBuffers() const override;
+
+    std::shared_ptr<const AIndexBuffer> GetIndexBuffer() const override;
 
   private:
     void BindAttribute(const BufferAttribute& attribute, size_t index,
@@ -55,5 +60,8 @@ namespace nv_engine {
 
   private:
     unsigned int vao_id_;
+
+    std::vector<std::shared_ptr<const AVertexBuffer>> vertex_buffers_;
+    std::shared_ptr<const AIndexBuffer> index_buffer_;
   };
 } // namespace nv_engine

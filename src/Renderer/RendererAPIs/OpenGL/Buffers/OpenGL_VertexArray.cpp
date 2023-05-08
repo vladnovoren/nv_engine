@@ -18,22 +18,37 @@ void VertexArray_OpenGL::Unbind() const {
   glBindVertexArray(0);
 }
 
-void VertexArray_OpenGL::AddVertexBuffer(const AVertexBuffer& buffer) {
+void VertexArray_OpenGL::AddVertexBuffer(
+    std::shared_ptr<const AVertexBuffer> buffer) {
   Bind();
-  buffer.Bind();
+  buffer->Bind();
 
-  const auto &layout = buffer.GetLayout();
+  const auto &layout = buffer->GetLayout();
   const auto &attributes = layout.GetAttributes();
   size_t index = 0;
   for (const auto &attribute : attributes) {
     BindAttribute(attribute, index, layout.GetStride());
     ++index;
   }
+
+  vertex_buffers_.push_back(buffer);
 }
 
-void VertexArray_OpenGL::AddIndexBuffer(const AIndexBuffer& buffer) {
+void VertexArray_OpenGL::SetIndexBuffer(
+    std::shared_ptr<const AIndexBuffer> buffer) {
   Bind();
-  buffer.Bind();
+  buffer->Bind();
+
+  index_buffer_ = buffer;
+}
+
+const std::vector<std::shared_ptr<const AVertexBuffer>>&
+VertexArray_OpenGL::GetVertexBuffers() const {
+  return vertex_buffers_;
+}
+
+std::shared_ptr<const AIndexBuffer> VertexArray_OpenGL::GetIndexBuffer() const {
+  return index_buffer_;
 }
 
 void VertexArray_OpenGL::BindAttribute(const BufferAttribute &attribute,
