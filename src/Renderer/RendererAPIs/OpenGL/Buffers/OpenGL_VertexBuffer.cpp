@@ -1,4 +1,4 @@
-#include "OpenGL_VertexBuffer.hpp"
+#include "Buffers/OpenGL_VertexBuffer.hpp"
 
 using namespace nv_engine;
 

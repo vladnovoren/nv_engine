@@ -1,3 +1,6 @@
+add shaders
+add context
+
 ---
 
 add smart pointers to deal with buffers handling in VertexArray

@@ -1,8 +1,8 @@
 #pragma once
 
-#include "AVertexArray.hpp"
-#include "AIndexBuffer.hpp"
-#include "BufferLayout.hpp"
+#include "Buffers/AVertexArray.hpp"
+#include "Buffers/AIndexBuffer.hpp"
+#include "Buffers/BufferLayout.hpp"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
@@ -35,7 +35,7 @@ namespace nv_engine {
   }
 
   class VertexArray_OpenGL : public AVertexArray {
-  public:
+   public:
     VertexArray_OpenGL();
     ~VertexArray_OpenGL() override;
 
@@ -50,7 +50,7 @@ namespace nv_engine {
 
     std::shared_ptr<const AIndexBuffer> GetIndexBuffer() const override;
 
-  private:
+   private:
     void BindAttribute(const BufferAttribute& attribute, size_t index,
                        size_t stride);
     void BindFloatAttribute(const BufferAttribute& attribute, size_t index,
@@ -58,7 +58,7 @@ namespace nv_engine {
     void BindIntAttribute(const BufferAttribute& attribute, size_t index,
                           size_t stride);
 
-  private:
+   private:
     unsigned int vao_id_;
 
     std::vector<std::shared_ptr<const AVertexBuffer>> vertex_buffers_;

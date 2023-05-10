@@ -1,4 +1,4 @@
-#include "OpenGL_IndexBuffer.hpp"
+#include "Buffers/OpenGL_IndexBuffer.hpp"
 
 using namespace nv_engine;
 

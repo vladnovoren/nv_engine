@@ -1,7 +1,7 @@
 #pragma once
 
-#include "OpenGL_VertexArray.hpp"
-#include "AVertexBuffer.hpp"
+#include "Buffers/OpenGL_VertexArray.hpp"
+#include "Buffers/AVertexBuffer.hpp"
 
 namespace nv_engine {
   class OpenGL_VertexBuffer : public AVertexBuffer {

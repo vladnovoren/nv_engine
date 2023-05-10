@@ -1,4 +1,4 @@
-#include "OpenGL_VertexArray.hpp"
+#include "Buffers/OpenGL_VertexArray.hpp"
 
 using namespace nv_engine;
 
