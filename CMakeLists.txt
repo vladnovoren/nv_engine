@@ -28,50 +28,34 @@ add_definitions(
   -DGLEW_STATIC
 )
 
-add_library(Renderer STATIC)
-add_library(RendererInterface STATIC)
 add_library(RendererOpenGL STATIC)
 
-target_compile_options(Renderer PRIVATE
+target_compile_options(RendererOpenGL PRIVATE
   -Wall
   -Wextra
   -Wpedantic
   -Werror
 )
 
-target_sources(RendererInterface PUBLIC
-  src/Renderer/Interface/Renderer.cpp
-
-  src/Renderer/Interface/Buffers/ABindable.cpp
-  src/Renderer/Interface/Buffers/ABuffer.cpp
-  src/Renderer/Interface/Buffers/AIndexBuffer.cpp
-  src/Renderer/Interface/Buffers/AVertexArray.cpp
-  src/Renderer/Interface/Buffers/AVertexBuffer.cpp
-  src/Renderer/Interface/Buffers/BufferLayout.cpp
-
-  src/Renderer/Interface/Shaders/AShader.cpp
-)
-
 target_sources(RendererOpenGL PUBLIC
-  src/Renderer/RendererAPIs/OpenGL/OpenGL_RendererAPI.cpp
+  src/Renderer/OpenGL/Buffers/Bindable.cpp
+  src/Renderer/OpenGL/Buffers/Buffer.cpp
 
-  src/Renderer/RendererAPIs/OpenGL/Buffers/OpenGL_IndexBuffer.cpp
-  src/Renderer/RendererAPIs/OpenGL/Buffers/OpenGL_VertexArray.cpp
-  src/Renderer/RendererAPIs/OpenGL/Buffers/OpenGL_VertexBuffer.cpp
+  src/Renderer/OpenGL/Buffers/IndexBuffer.cpp
+  src/Renderer/OpenGL/Buffers/VertexArray.cpp
+  src/Renderer/OpenGL/Buffers/VertexBuffer.cpp
 
-  src/Renderer/RendererAPIs/OpenGL/Shaders/OpenGL_Shader.cpp
+  src/Renderer/OpenGL/Shaders/Program.cpp
+  src/Renderer/OpenGL/Shaders/Shader.cpp
 )
 
 include_directories(
   inc/Renderer/
   inc/Renderer/Interface/
-
-  inc/Renderer/RendererAPIs/
-  inc/Renderer/RendererAPIs/OpenGL/
+  inc/Renderer/OpenGL/
 
   inc/Tools
 )
 
 
-target_link_libraries(RendererOpenGL ${OpenGL_libs} RendererInterface)
-target_link_libraries(Renderer RendererOpenGL)
+target_link_libraries(RendererOpenGL ${OpenGL_libs})

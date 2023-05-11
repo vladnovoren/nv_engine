@@ -1,6 +1,7 @@
-add shaders
-add context
+abandon the idea of common interface for different APIs
 
 ---
 
+add shaders
+add context
 add smart pointers to deal with buffers handling in VertexArray

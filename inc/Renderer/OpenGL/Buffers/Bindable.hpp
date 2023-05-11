@@ -1,9 +1,9 @@
 #pragma once
 
-namespace nv_engine {
-  class ABindable {
+namespace nv_engine::gl {
+  class Bindable {
    public:
-    virtual ~ABindable() = 0;
+    virtual ~Bindable() = 0;
 
    public:
     virtual void Bind() const = 0;

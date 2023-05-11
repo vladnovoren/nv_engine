@@ -1,11 +1,21 @@
 #pragma once
 
-#include "Shaders/AShader.hpp"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <vector>
+#include <filesystem>
+#include <string>
+#include <fstream>
 
-namespace nv_engine {
-  [[maybe_unused]] static unsigned int GetShaderType_OpenGL(ShaderType type) {
+namespace nv_engine::gl {
+  enum class ShaderType {
+    VERTEX,
+    FRAGMENT,
+    GEOMETRY,
+    COMPUTE
+  };
+
+  [[maybe_unused]] static unsigned int GetShaderType(ShaderType type) {
     switch (type) {
       case ShaderType::VERTEX:
         return GL_VERTEX_SHADER;
@@ -19,16 +29,18 @@ namespace nv_engine {
     return 0;
   }
 
-  class Shader_OpenGL : public AShader {
+  class Shader {
    public:
-    Shader_OpenGL(ShaderType type, const std::filesystem::path& path);
-    ~Shader_OpenGL() override;
+    Shader(ShaderType type, const std::filesystem::path& path);
+    ~Shader();
 
     operator unsigned int() const;
 
    protected:
-    void Compile(std::string source) override;
-    void CheckErrors() override;
+    static std::string ReadSource(const std::filesystem::path& path);
+
+    void Compile(std::string source);
+    void CheckErrors();
 
     unsigned int shader_id_ = 0;
     unsigned int type_ = 0;

@@ -1,8 +1,7 @@
 #pragma once
 
-#include "Buffers/AVertexArray.hpp"
-#include "Buffers/AIndexBuffer.hpp"
-#include "Buffers/BufferLayout.hpp"
+#include "IndexBuffer.hpp"
+#include "VertexBuffer.hpp"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
@@ -10,9 +9,9 @@
 #include <vector>
 #include <stdexcept>
 
-namespace nv_engine {
-  [[maybe_unused]] static unsigned int OpenGL_GetShaderDataAtomicType(
-                                        eShaderDataT type) {
+namespace nv_engine::gl {
+  [[maybe_unused]] static unsigned int GetShaderDataAtomicType(
+      eShaderDataT type) {
     switch (type) {
       case eShaderDataT::BOOL:
         return GL_BOOL;
@@ -34,21 +33,16 @@ namespace nv_engine {
     return 0;
   }
 
-  class VertexArray_OpenGL : public AVertexArray {
+  class VertexArray : Bindable {
    public:
-    VertexArray_OpenGL();
-    ~VertexArray_OpenGL() override;
+    VertexArray();
+    ~VertexArray();
 
     void Bind() const override;
     void Unbind() const override;
 
-    void AddVertexBuffer(std::shared_ptr<const AVertexBuffer> buffer) override;
-    void SetIndexBuffer(std::shared_ptr<const AIndexBuffer> buffer) override;
-
-    const std::vector<std::shared_ptr<const AVertexBuffer>>&
-    GetVertexBuffers() const override;
-
-    std::shared_ptr<const AIndexBuffer> GetIndexBuffer() const override;
+    void AddVertexBuffer(const VertexBuffer& buffer);
+    void SetIndexBuffer(const IndexBuffer& buffer);
 
    private:
     void BindAttribute(const BufferAttribute& attribute, size_t index,
@@ -60,8 +54,5 @@ namespace nv_engine {
 
    private:
     unsigned int vao_id_;
-
-    std::vector<std::shared_ptr<const AVertexBuffer>> vertex_buffers_;
-    std::shared_ptr<const AIndexBuffer> index_buffer_;
   };
 } // namespace nv_engine

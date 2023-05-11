@@ -1,24 +1,24 @@
-#include "Buffers/OpenGL_IndexBuffer.hpp"
+#include "Buffers/IndexBuffer.hpp"
 
-using namespace nv_engine;
+using namespace nv_engine::gl;
 
-OpenGL_IndexBuffer::OpenGL_IndexBuffer() {
+IndexBuffer::IndexBuffer() {
   glCreateBuffers(1, &ebo_id_);
 }
 
-OpenGL_IndexBuffer::~OpenGL_IndexBuffer() {
+IndexBuffer::~IndexBuffer() {
   glDeleteBuffers(1, &ebo_id_);
 }
 
-void OpenGL_IndexBuffer::Bind() const {
+void IndexBuffer::Bind() const {
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo_id_);
 }
 
-void OpenGL_IndexBuffer::Unbind() const {
+void IndexBuffer::Unbind() const {
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
-void OpenGL_IndexBuffer::BufferData(const void* data, size_t size) {
+void IndexBuffer::BufferData(const void* data, size_t size) {
   /*
     GL_ELEMENT_ARRAY_BUFFER is not valid without an active bound VAO
     GL_ARRAY_BUFFER allows to bind and buffer data regardless of VAO state

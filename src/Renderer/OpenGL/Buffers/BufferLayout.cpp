@@ -1,6 +1,6 @@
 #include "Buffers/BufferLayout.hpp"
 
-using namespace nv_engine;
+using namespace nv_engine::gl;
 
 BufferAttribute::BufferAttribute(std::string in_name, eShaderDataT in_type,
                                  bool in_normalized)

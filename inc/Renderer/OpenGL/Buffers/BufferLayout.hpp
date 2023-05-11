@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 
-namespace nv_engine {
+namespace nv_engine::gl {
 enum class eShaderDataT {
   BOOL,
   FLOAT,
