@@ -15,7 +15,7 @@ namespace nv_engine::gl {
     COMPUTE
   };
 
-  [[maybe_unused]] static unsigned int GetShaderType(ShaderType type) {
+  [[maybe_unused]] static unsigned int GetGLShaderType(ShaderType type) {
     switch (type) {
       case ShaderType::VERTEX:
         return GL_VERTEX_SHADER;
@@ -35,6 +35,7 @@ namespace nv_engine::gl {
     ~Shader();
 
     operator unsigned int() const;
+    ShaderType Type() const;
 
    protected:
     static std::string ReadSource(const std::filesystem::path& path);
@@ -43,6 +44,6 @@ namespace nv_engine::gl {
     void CheckErrors();
 
     unsigned int shader_id_ = 0;
-    unsigned int type_ = 0;
+    ShaderType type_;
   };
-} // namespace nv_engine
+} // namespace nv_engine::gl

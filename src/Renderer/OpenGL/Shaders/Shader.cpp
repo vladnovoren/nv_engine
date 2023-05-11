@@ -3,8 +3,16 @@
 using namespace nv_engine::gl;
 
 Shader::Shader(ShaderType type, const std::filesystem::path& path)
-  : type_(GetShaderType(type)) {
+  : type_(type) {
   auto source = ReadSource(path);
+}
+
+Shader::operator unsigned int() const {
+  return shader_id_;
+}
+
+ShaderType Shader::Type() const {
+  return type_;
 }
 
 std::string Shader::ReadSource(const std::filesystem::path& path) {
@@ -26,7 +34,7 @@ std::string Shader::ReadSource(const std::filesystem::path& path) {
 }
 
 void Shader::Compile(std::string source) {
-  shader_id_ = glCreateShader(type_);
+  shader_id_ = glCreateShader(GetGLShaderType(type_));
 
   const char* c_shader_source = source.c_str();
   glShaderSource(shader_id_, 1, &c_shader_source, NULL);
