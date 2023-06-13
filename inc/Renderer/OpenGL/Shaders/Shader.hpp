@@ -32,7 +32,6 @@ namespace nv_engine::gl {
   class Shader {
    public:
     Shader(ShaderType type, const std::filesystem::path& path);
-    ~Shader();
 
     operator unsigned int() const;
     ShaderType Type() const;

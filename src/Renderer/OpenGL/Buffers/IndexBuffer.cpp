@@ -18,7 +18,7 @@ void IndexBuffer::Unbind() const {
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
-void IndexBuffer::BufferData(const void* data, size_t size) {
+void IndexBuffer::BufferData(const unsigned int* data, size_t size) {
   /*
     GL_ELEMENT_ARRAY_BUFFER is not valid without an active bound VAO
     GL_ARRAY_BUFFER allows to bind and buffer data regardless of VAO state

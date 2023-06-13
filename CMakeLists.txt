@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.22.1)
 
 project(nv_engine)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS "ON")
+
 add_subdirectory(third_party)
 
 include_directories(
@@ -39,7 +41,7 @@ target_compile_options(RendererOpenGL PRIVATE
 
 target_sources(RendererOpenGL PUBLIC
   src/Renderer/OpenGL/Buffers/Bindable.cpp
-  src/Renderer/OpenGL/Buffers/Buffer.cpp
+  src/Renderer/OpenGL/Buffers/BufferLayout.cpp
 
   src/Renderer/OpenGL/Buffers/IndexBuffer.cpp
   src/Renderer/OpenGL/Buffers/VertexArray.cpp
@@ -47,6 +49,9 @@ target_sources(RendererOpenGL PUBLIC
 
   src/Renderer/OpenGL/Shaders/Program.cpp
   src/Renderer/OpenGL/Shaders/Shader.cpp
+
+  src/Renderer/OpenGL/Window/Window.cpp
+  src/Renderer/OpenGL/Window/Context.cpp
 )
 
 include_directories(
@@ -59,3 +64,11 @@ include_directories(
 
 
 target_link_libraries(RendererOpenGL ${OpenGL_libs})
+
+add_executable(test_VAO)
+
+target_sources(test_VAO PUBLIC
+  src/Tests/Renderer/TestVAO/TestVAO.cpp
+)
+
+target_link_libraries(test_VAO PUBLIC RendererOpenGL)

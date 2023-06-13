@@ -8,31 +8,9 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <vector>
 #include <stdexcept>
+#include "Types.hpp"
 
 namespace nv_engine::gl {
-  [[maybe_unused]] static unsigned int GetShaderDataAtomicType(
-      eShaderDataT type) {
-    switch (type) {
-      case eShaderDataT::BOOL:
-        return GL_BOOL;
-      case eShaderDataT::FLOAT:
-      case eShaderDataT::FLOAT2:
-      case eShaderDataT::FLOAT3:
-      case eShaderDataT::FLOAT4:
-        return GL_FLOAT;
-      case eShaderDataT::INT:
-      case eShaderDataT::INT2:
-      case eShaderDataT::INT3:
-      case eShaderDataT::INT4:
-        return GL_INT;
-      case eShaderDataT::MAT3:
-      case eShaderDataT::MAT4:
-        return GL_FLOAT;
-    }
-
-    return 0;
-  }
-
   class VertexArray : Bindable {
    public:
     VertexArray();
