@@ -11,13 +11,13 @@
 #include "Types.hpp"
 
 namespace nv_engine::gl {
-  class VertexArray : Bindable {
+  class VertexArray {
    public:
     VertexArray();
     ~VertexArray();
 
-    void Bind() const override;
-    void Unbind() const override;
+    void Bind() const;
+    void Unbind() const;
 
     void AddVertexBuffer(const VertexBuffer& buffer);
     void SetIndexBuffer(const IndexBuffer& buffer);

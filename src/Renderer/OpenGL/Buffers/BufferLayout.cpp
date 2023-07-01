@@ -8,8 +8,9 @@ BufferAttribute::BufferAttribute(std::string in_name, eShaderDataT in_type,
       size(GetShaderDataTypeSize(in_type)), offset(0),
       normalized(in_normalized) {}
 
-BufferLayout::BufferLayout(std::vector<BufferAttribute> attributes)
-    : attributes_(std::move(attributes)) {}
+BufferLayout::BufferLayout(std::vector<BufferAttribute> attributes) {
+  SetAttributes(std::move(attributes));
+}
 
 void BufferLayout::SetAttributes(std::vector<BufferAttribute> attributes) {
   attributes_ = std::move(attributes);

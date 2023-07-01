@@ -20,6 +20,8 @@ namespace nv_engine::gl {
     void DrawElements(const VertexArray& vao, ePrimitive primitive,
                       size_t first, size_t count);
 
+    void PollEvents();
+
    private:
     Window& window_;
   };

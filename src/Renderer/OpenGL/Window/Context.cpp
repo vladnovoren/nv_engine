@@ -3,10 +3,12 @@
 using namespace nv_engine::gl;
 
 Context::Context(Window& window) : window_(window) {
+  glEnable(GL_DEPTH_TEST);
+  glDepthFunc(GL_LESS);
 }
 
 void Context::SwitchTo() {
-  glfwMakeContextCurrent(window_.gl_window_);
+  glfwMakeContextCurrent(window_.glfw_window_);
 
   glewExperimental = true;
   if (glewInit() != GLEW_OK) {
@@ -15,7 +17,7 @@ void Context::SwitchTo() {
 }
 
 void Context::Clear(eBufferT buffer) {
-  glClear(buffer);
+  glClear((GLbitfield)buffer);
 }
 
 void Context::ClearColor(glm::vec4 color) {
@@ -25,11 +27,15 @@ void Context::ClearColor(glm::vec4 color) {
 void Context::DrawArray(const VertexArray& vao, ePrimitive primitive,
                         size_t first, size_t count) {
   vao.Bind();
-  glDrawArrays(primitive, first, count);
+  glDrawArrays((GLenum)primitive, first, count);
 }
 
 void Context::DrawElements(const VertexArray& vao, ePrimitive primitive,
                            size_t first, size_t count) {
   vao.Bind();
-  glDrawElements(primitive, count, GL_UNSIGNED_INT, (unsigned int*)first);
+  glDrawElements((GLenum)primitive, count, GL_UNSIGNED_INT, (unsigned int*)first);
+}
+
+void Context::PollEvents() {
+  glfwPollEvents();
 }

@@ -60,16 +60,16 @@ void VertexArray::BindAttribute(const BufferAttribute& attribute,
 
 void VertexArray::BindFloatAttribute(const BufferAttribute& attribute,
                                      size_t index, size_t stride) {
-  glEnableVertexAttribArray(index);
   glVertexAttribPointer(index, GetShaderDataCount(attribute.type),
                         GetShaderDataAtomicType(attribute.type),
                         attribute.normalized, stride, (void*)attribute.offset);
+  glEnableVertexAttribArray(index);
 }
 
 void VertexArray::BindIntAttribute(const BufferAttribute& attribute,
                                    size_t index, size_t stride) {
-  glEnableVertexAttribArray(index);
   glVertexAttribIPointer(index, GetShaderDataCount(attribute.type),
                          GetShaderDataAtomicType(attribute.type),
                          stride, (uint8_t*)attribute.offset);
+  glEnableVertexAttribArray(index);
 }

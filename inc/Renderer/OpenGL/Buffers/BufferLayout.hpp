@@ -7,7 +7,7 @@
 namespace nv_engine::gl {
   struct BufferAttribute {
     BufferAttribute(std::string name, eShaderDataT type,
-                           bool normalized = false);
+                    bool normalized = false);
 
     std::string name;
     eShaderDataT type;

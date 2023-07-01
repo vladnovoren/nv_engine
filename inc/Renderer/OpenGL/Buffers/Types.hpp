@@ -78,7 +78,7 @@ namespace nv_engine::gl {
     return 0;
   }
 
-  enum ePrimitive {
+  enum class ePrimitive {
     TRIANGLES = GL_TRIANGLES
   };
 
@@ -105,7 +105,7 @@ namespace nv_engine::gl {
     return 0;
   }
 
-  enum eBufferT : GLbitfield {
+  enum class eBufferT : GLbitfield {
     COLOR = GL_COLOR_BUFFER_BIT,
     DEPTH = GL_DEPTH_BUFFER_BIT,
     STENCIL = GL_STENCIL_BUFFER_BIT

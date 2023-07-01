@@ -1,18 +1,17 @@
 #pragma once
 
-#include "Bindable.hpp"
 #include "BufferLayout.hpp"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
 namespace nv_engine::gl {
-  class VertexBuffer : Bindable {
+  class VertexBuffer {
    public:
     VertexBuffer();
     ~VertexBuffer();
 
-    void Bind() const override;
-    void Unbind() const override;
+    void Bind() const;
+    void Unbind() const;
     void BufferData(const void *data, size_t size);
 
     void SetLayout(BufferLayout layout);

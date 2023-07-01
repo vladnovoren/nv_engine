@@ -54,6 +54,10 @@ void Program::SetUniform(const std::string& name, const glm::mat4& value) {
   glUniformMatrix4fv(GetUniform(name), 1, GL_FALSE, &value[0][0]);
 }
 
+void Program::Use() {
+  glUseProgram(program_id_);
+}
+
 void Program::AttachShader(const Shader& shader) {
   glAttachShader(program_id_, shader);
 }

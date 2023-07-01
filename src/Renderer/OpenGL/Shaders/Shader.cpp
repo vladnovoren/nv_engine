@@ -4,7 +4,7 @@ using namespace nv_engine::gl;
 
 Shader::Shader(ShaderType type, const std::filesystem::path& path)
   : type_(type) {
-  auto source = ReadSource(path);
+  Compile(ReadSource(path));
 }
 
 Shader::operator unsigned int() const {
