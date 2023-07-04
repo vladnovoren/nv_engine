@@ -54,6 +54,10 @@ void Program::SetUniform(const std::string& name, const glm::mat4& value) {
   glUniformMatrix4fv(GetUniform(name), 1, GL_FALSE, &value[0][0]);
 }
 
+int Program::GetAttribLocation(const std::string& name) {
+  return glGetAttribLocation(program_id_, name.c_str());
+}
+
 void Program::Use() {
   glUseProgram(program_id_);
 }

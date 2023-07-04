@@ -6,10 +6,10 @@
 
 namespace nv_engine::gl {
   struct BufferAttribute {
-    BufferAttribute(std::string name, eShaderDataT type,
+    BufferAttribute(int index, eShaderDataT type,
                     bool normalized = false);
 
-    std::string name;
+    int index;
     eShaderDataT type;
     unsigned int size;
     size_t offset;

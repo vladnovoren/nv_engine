@@ -14,11 +14,6 @@ void VertexBuffer::Bind() const {
   glBindBuffer(GL_ARRAY_BUFFER, vbo_id_);
 }
 
-void VertexBuffer::BufferData(const void *data, size_t size) {
-  Bind();
-  glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
-}
-
 void VertexBuffer::SetLayout(BufferLayout layout) {
   layout_ = std::move(layout);
 }

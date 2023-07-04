@@ -24,33 +24,32 @@ void VertexArray::AddVertexBuffer(const VertexBuffer& buffer) {
 
   const auto &layout = buffer.GetLayout();
   const auto &attributes = layout.GetAttributes();
-  size_t index = 0;
   for (const auto &attribute : attributes) {
-    BindAttribute(attribute, index, layout.GetStride());
-    ++index;
+    BindAttribute(attribute, layout.GetStride());
   }
 }
 
 void VertexArray::SetIndexBuffer(const IndexBuffer& buffer) {
   Bind();
   buffer.Bind();
+  ebo_id_ = buffer;
 }
 
 void VertexArray::BindAttribute(const BufferAttribute& attribute,
-                                size_t index, size_t stride) {
+                                size_t stride) {
   switch (attribute.type) {
     case eShaderDataT::FLOAT:
     case eShaderDataT::FLOAT2:
     case eShaderDataT::FLOAT3:
     case eShaderDataT::FLOAT4:
-      BindFloatAttribute(attribute, index, stride);
+      BindFloatAttribute(attribute, stride);
       break;
     case eShaderDataT::BOOL:
     case eShaderDataT::INT:
     case eShaderDataT::INT2:
     case eShaderDataT::INT3:
     case eShaderDataT::INT4:
-      BindIntAttribute(attribute, index, stride);
+      BindIntAttribute(attribute, stride);
       break;
     default:
       throw std::runtime_error("unsupported shader data type for attribute");
@@ -59,17 +58,17 @@ void VertexArray::BindAttribute(const BufferAttribute& attribute,
 }
 
 void VertexArray::BindFloatAttribute(const BufferAttribute& attribute,
-                                     size_t index, size_t stride) {
-  glVertexAttribPointer(index, GetShaderDataCount(attribute.type),
+                                     size_t stride) {
+  glVertexAttribPointer(attribute.index, GetShaderDataCount(attribute.type),
                         GetShaderDataAtomicType(attribute.type),
                         attribute.normalized, stride, (void*)attribute.offset);
-  glEnableVertexAttribArray(index);
+  glEnableVertexAttribArray(attribute.index);
 }
 
 void VertexArray::BindIntAttribute(const BufferAttribute& attribute,
-                                   size_t index, size_t stride) {
-  glVertexAttribIPointer(index, GetShaderDataCount(attribute.type),
+                                   size_t stride) {
+  glVertexAttribIPointer(attribute.index, GetShaderDataCount(attribute.type),
                          GetShaderDataAtomicType(attribute.type),
                          stride, (uint8_t*)attribute.offset);
-  glEnableVertexAttribArray(index);
+  glEnableVertexAttribArray(attribute.index);
 }

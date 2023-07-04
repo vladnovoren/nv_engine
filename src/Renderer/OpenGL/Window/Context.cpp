@@ -25,15 +25,16 @@ void Context::ClearColor(glm::vec4 color) {
 }
 
 void Context::DrawArray(const VertexArray& vao, ePrimitive primitive,
-                        size_t first, size_t count) {
+                        size_t first, size_t n_vertices) {
   vao.Bind();
-  glDrawArrays((GLenum)primitive, first, count);
+  glDrawArrays((GLenum)primitive, first, n_vertices);
 }
 
-void Context::DrawElements(const VertexArray& vao, ePrimitive primitive,
-                           size_t first, size_t count) {
+void Context::DrawIndexed(const VertexArray& vao, ePrimitive primitive,
+                          size_t first, size_t n_vertices) {
   vao.Bind();
-  glDrawElements((GLenum)primitive, count, GL_UNSIGNED_INT, (unsigned int*)first);
+  glDrawElements((GLenum)primitive, n_vertices, GL_UNSIGNED_INT,
+                 (unsigned int*)first);
 }
 
 void Context::PollEvents() {

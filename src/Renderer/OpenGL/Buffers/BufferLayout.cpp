@@ -2,9 +2,9 @@
 
 using namespace nv_engine::gl;
 
-BufferAttribute::BufferAttribute(std::string in_name, eShaderDataT in_type,
+BufferAttribute::BufferAttribute(int in_index, eShaderDataT in_type,
                                  bool in_normalized)
-    : name(std::move(in_name)), type(in_type),
+    : index(in_index), type(in_type),
       size(GetShaderDataTypeSize(in_type)), offset(0),
       normalized(in_normalized) {}
 

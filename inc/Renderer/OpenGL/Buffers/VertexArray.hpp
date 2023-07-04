@@ -23,14 +23,12 @@ namespace nv_engine::gl {
     void SetIndexBuffer(const IndexBuffer& buffer);
 
    private:
-    void BindAttribute(const BufferAttribute& attribute, size_t index,
-                       size_t stride);
-    void BindFloatAttribute(const BufferAttribute& attribute, size_t index,
-                            size_t stride);
-    void BindIntAttribute(const BufferAttribute& attribute, size_t index,
-                          size_t stride);
+    void BindAttribute(const BufferAttribute& attribute, size_t stride);
+    void BindFloatAttribute(const BufferAttribute& attribute, size_t stride);
+    void BindIntAttribute(const BufferAttribute& attribute, size_t stride);
 
    private:
     unsigned int vao_id_;
+    unsigned int ebo_id_;
   };
 } // namespace nv_engine

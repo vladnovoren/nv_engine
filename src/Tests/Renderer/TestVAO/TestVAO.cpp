@@ -15,9 +15,19 @@ int main() {
   context.SwitchTo();
 
   std::vector<Vertex> vertices{
-    {{0.5, 0, 0}, {1, 0, 0}},
-    {{-0.5, 0, 0}, {0, 1, 0}},
-    {{0, 0.5, 0}, {0, 0, 1}}
+    {{-1, 0, 0}, {1, 0, 0}},
+    {{-0.5, 0.5, 0}, {0, 1, 0}},
+    {{0, 0, 0}, {0, 0, 1}},
+
+    {{0, 0, 0}, {1, 0, 0}},
+    {{0.5, 0.5, 0}, {0, 1, 0}},
+    {{1, 0, 0}, {0, 0, 1}}
+  };
+
+  std::vector<unsigned int> indices{
+    0, 2, 1,
+
+    3, 5, 4
   };
 
   gl::Program program("../src/Tests/Renderer/TestVAO/Vert.vert",
@@ -28,19 +38,23 @@ int main() {
 
   gl::VertexBuffer vbo;
   vbo.SetLayout(gl::BufferLayout({
-        gl::BufferAttribute("in_position", gl::eShaderDataT::FLOAT3),
-        gl::BufferAttribute("in_color", gl::eShaderDataT::FLOAT3)}));
-  vbo.BufferData(vertices.data(), vertices.size() * sizeof(Vertex));
+        gl::BufferAttribute(program.GetAttribLocation("in_position"),
+                            gl::eShaderDataT::FLOAT3),
+        gl::BufferAttribute(program.GetAttribLocation("in_color"),
+                            gl::eShaderDataT::FLOAT3)}));
+  vbo.BufferData(vertices);
+
+  gl::IndexBuffer ebo;
+  ebo.BufferData(indices);
 
   gl::VertexArray vao;
   vao.AddVertexBuffer(vbo);
-
-  vao.Bind();
+  vao.SetIndexBuffer(ebo);
 
   while (!window.ShouldClose() && !window.IsKeyDown(gl::eKey::ESCAPE)) {
     context.PollEvents();
     context.Clear();
-    context.DrawArray(vao, gl::ePrimitive::TRIANGLES, 0, vertices.size());
+    context.DrawIndexed(vao, gl::ePrimitive::TRIANGLES, 0, vertices.size());
     window.SwapBuffers();
   }
 

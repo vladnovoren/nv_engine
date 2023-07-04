@@ -12,7 +12,13 @@ namespace nv_engine::gl {
 
     void Bind() const;
     void Unbind() const;
-    void BufferData(const void *data, size_t size);
+
+    template<typename T>
+    void BufferData(const std::vector<T>& vertices) {
+      Bind();
+      glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(T),
+                   vertices.data(), GL_STATIC_DRAW);
+    }
 
     void SetLayout(BufferLayout layout);
     const BufferLayout& GetLayout() const;

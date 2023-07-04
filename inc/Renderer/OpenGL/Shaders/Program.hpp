@@ -21,6 +21,8 @@ namespace nv_engine::gl {
     void SetUniform(const std::string& name, const glm::mat3& value);
     void SetUniform(const std::string& name, const glm::mat4& value);
 
+    int GetAttribLocation(const std::string& name);
+
     void Use();
 
    private:

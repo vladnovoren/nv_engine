@@ -2,6 +2,7 @@
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <vector>
 
 namespace nv_engine::gl {
   class IndexBuffer {
@@ -9,10 +10,23 @@ namespace nv_engine::gl {
     IndexBuffer();
     ~IndexBuffer();
 
-    void BufferData(const unsigned int* data, size_t size);
+    template<typename T>
+    void BufferData(const std::vector<T>& indices) {
+      /*
+        GL_ELEMENT_ARRAY_BUFFER is not valid without an active bound VAO
+        GL_ARRAY_BUFFER allows to bind and buffer data regardless of VAO state
+        then you can interpret it as GL_ELEMENT_ARRAY_BUFFER when some VAO
+        will be bound
+      **/
+      glBindBuffer(GL_ARRAY_BUFFER, ebo_id_);
+      glBufferData(GL_ARRAY_BUFFER, indices.size() * sizeof(T), indices.data(),
+                   GL_STATIC_DRAW);
+    }
 
     void Bind() const;
     void Unbind() const;
+
+    operator unsigned int() const;
 
    protected:
     unsigned int ebo_id_;

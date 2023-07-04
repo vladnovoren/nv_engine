@@ -15,10 +15,10 @@ namespace nv_engine::gl {
     void ClearColor(glm::vec4 color);
 
     void DrawArray(const VertexArray& vao, ePrimitive primitive, size_t first,
-                   size_t count);
+                   size_t n_vertices);
 
-    void DrawElements(const VertexArray& vao, ePrimitive primitive,
-                      size_t first, size_t count);
+    void DrawIndexed(const VertexArray& vao, ePrimitive primitive,
+                     size_t first, size_t n_vertices);
 
     void PollEvents();
 
