@@ -9,6 +9,32 @@ find_package(glfw3 REQUIRED)
 find_package(GLEW REQUIRED)
 find_package(glm REQUIRED)
 
+add_library(nv_engine)
+
+add_library(Core STATIC)
+
+set(Core_INCLUDE_DIRS
+  inc/
+  inc/Core/
+)
+
+target_sources(Core PUBLIC
+  src/Core/Transform.cpp
+
+  src/Core/Camera/PerspectiveCamera.cpp
+)
+
+target_include_directories(Core PUBLIC ${Core_INCLUDE_DIRS})
+
+target_compile_options(Core PUBLIC
+  -Wall
+  -Wextra
+  -Wpedantic
+  -Werror
+
+  -g
+)
+
 set(OpenGL_libs
   OpenGL
   glfw
@@ -56,4 +82,7 @@ target_sources(test_VAO PUBLIC
   src/Tests/Renderer/TestVAO/TestVAO.cpp
 )
 
-target_link_libraries(test_VAO PUBLIC RendererOpenGL)
+target_link_libraries(test_VAO PUBLIC nv_engine)
+
+target_link_libraries(RendererOpenGL Core)
+target_link_libraries(nv_engine PUBLIC RendererOpenGL)
