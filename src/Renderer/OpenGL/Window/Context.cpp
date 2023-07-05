@@ -3,8 +3,6 @@
 using namespace nv_engine::gl;
 
 Context::Context(Window& window) : window_(window) {
-  glEnable(GL_DEPTH_TEST);
-  glDepthFunc(GL_LESS);
 }
 
 void Context::SwitchTo() {
@@ -14,6 +12,9 @@ void Context::SwitchTo() {
   if (glewInit() != GLEW_OK) {
     throw std::runtime_error("glew init error");
   }
+
+  glEnable(GL_DEPTH_TEST);
+  glDepthFunc(GL_LESS);
 }
 
 void Context::Clear(eBufferT buffer) {

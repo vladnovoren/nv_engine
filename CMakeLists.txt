@@ -70,6 +70,8 @@ target_sources(RendererOpenGL PUBLIC
   src/Renderer/OpenGL/Shaders/Program.cpp
   src/Renderer/OpenGL/Shaders/Shader.cpp
 
+  src/Renderer/OpenGL/Textures/Texture2D.cpp
+
   src/Renderer/OpenGL/Window/Window.cpp
   src/Renderer/OpenGL/Window/Context.cpp
 )
@@ -77,12 +79,17 @@ target_sources(RendererOpenGL PUBLIC
 target_link_libraries(RendererOpenGL ${OpenGL_libs})
 
 add_executable(test_VAO)
-
 target_sources(test_VAO PUBLIC
   src/Tests/Renderer/TestVAO/TestVAO.cpp
 )
-
 target_link_libraries(test_VAO PUBLIC nv_engine)
+
+add_executable(test_textures)
+target_sources(test_textures PUBLIC
+  src/Tests/Renderer/TestTextures/main.cpp
+)
+target_link_libraries(test_textures PUBLIC nv_engine)
+
 
 target_link_libraries(RendererOpenGL Core)
 target_link_libraries(nv_engine PUBLIC RendererOpenGL)

@@ -7,3 +7,4 @@ void main() {
   out_color.rgb = color;
   out_color.a = 1.0;
 }
+

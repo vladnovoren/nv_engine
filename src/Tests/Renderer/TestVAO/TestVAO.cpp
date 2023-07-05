@@ -18,14 +18,49 @@ int main() {
   context.SwitchTo();
 
   std::vector<Vertex> vertices{
-    {{-10, 0, 0}, {1, 0, 0}},
-    {{0, 10, 0}, {0, 1, 0}},
-    {{10, 0, 0}, {0, 0, 1}}
+    {{-1.0f, -1.0f, -1.0f}, {}}, 
+    {{-1.0f, -1.0f,  1.0f}, {}},
+    {{-1.0f,  1.0f,  1.0f}, {}},
+    {{ 1.0f,  1.0f, -1.0f}, {}},
+    {{-1.0f, -1.0f, -1.0f}, {}},
+    {{-1.0f,  1.0f, -1.0f}, {}},
+    {{ 1.0f, -1.0f,  1.0f}, {}},
+    {{-1.0f, -1.0f, -1.0f}, {}},
+    {{ 1.0f, -1.0f, -1.0f}, {}},
+    {{ 1.0f,  1.0f, -1.0f}, {}},
+    {{ 1.0f, -1.0f, -1.0f}, {}},
+    {{-1.0f, -1.0f, -1.0f}, {}},
+    {{-1.0f, -1.0f, -1.0f}, {}},
+    {{-1.0f,  1.0f,  1.0f}, {}},
+    {{-1.0f,  1.0f, -1.0f}, {}},
+    {{ 1.0f, -1.0f,  1.0f}, {}},
+    {{-1.0f, -1.0f,  1.0f}, {}},
+    {{-1.0f, -1.0f, -1.0f}, {}},
+    {{-1.0f,  1.0f,  1.0f}, {}},
+    {{-1.0f, -1.0f,  1.0f}, {}},
+    {{ 1.0f, -1.0f,  1.0f}, {}},
+    {{ 1.0f,  1.0f,  1.0f}, {}},
+    {{ 1.0f, -1.0f, -1.0f}, {}},
+    {{ 1.0f,  1.0f, -1.0f}, {}},
+    {{ 1.0f, -1.0f, -1.0f}, {}},
+    {{ 1.0f,  1.0f,  1.0f}, {}},
+    {{ 1.0f, -1.0f,  1.0f}, {}},
+    {{ 1.0f,  1.0f,  1.0f}, {}},
+    {{ 1.0f,  1.0f, -1.0f}, {}},
+    {{-1.0f,  1.0f, -1.0f}, {}},
+    {{ 1.0f,  1.0f,  1.0f}, {}},
+    {{-1.0f,  1.0f, -1.0f}, {}},
+    {{-1.0f,  1.0f,  1.0f}, {}},
+    {{ 1.0f,  1.0f,  1.0f}, {}},
+    {{-1.0f,  1.0f,  1.0f}, {}},
+    {{ 1.0f, -1.0f,  1.0f}, {}}
   };
 
-  std::vector<unsigned int> indices{
-    0, 2, 1
-  };
+  for (auto& v : vertices) {
+    v.color.r = static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
+    v.color.g = static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
+    v.color.b = static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
+  }
 
   gl::Program program("../src/Tests/Renderer/TestVAO/Vert.vert",
                       "../src/Tests/Renderer/TestVAO/Frag.frag");
@@ -41,21 +76,23 @@ int main() {
                             gl::eShaderDataT::FLOAT3)}));
   vbo.BufferData(vertices);
 
-  gl::IndexBuffer ebo;
-  ebo.BufferData(indices);
+/*  gl::IndexBuffer ebo;*/
+  /*ebo.BufferData(indices);*/
 
   gl::VertexArray vao;
   vao.AddVertexBuffer(vbo);
-  vao.SetIndexBuffer(ebo);
+  //vao.SetIndexBuffer(ebo);
 
   PerspectiveCamera camera;
   camera.transform.position = glm::vec3(0, 0, 100.f);
-  //camera.transform.Rotate(glm::radians(180.0f), kUp);
-  auto forward = camera.transform.CalculateForward();
 
-  std::cout << forward.x << ' ' << forward.y << ' ' << forward.z << '\n';;
+  float ds = 0.5;
+  float dphi = 0.012;
 
-  float ds = 1;
+/*  glEnable(GL_DEPTH_TEST);*/
+  /*glDepthFunc(GL_LESS);*/
+
+  glm::mat4 model = glm::scale(glm::identity<glm::mat4>(), glm::vec3(10));
 
   while (!window.ShouldClose() && !window.IsKeyDown(gl::eKey::ESCAPE)) {
     if (window.IsKeyDown(gl::eKey::W)) {
@@ -71,14 +108,27 @@ int main() {
       camera.transform.position += camera.transform.CalculateRight() * ds;
     }
 
+    if (window.IsKeyDown(gl::eKey::LEFT)) {
+      camera.transform.Rotate(dphi, camera.transform.CalculateUp());
+    }
+    if (window.IsKeyDown(gl::eKey::RIGHT)) {
+      camera.transform.Rotate(-dphi, camera.transform.CalculateUp());
+    }
+    if (window.IsKeyDown(gl::eKey::UP)) {
+      camera.transform.Rotate(dphi, camera.transform.CalculateRight());
+    }
+    if (window.IsKeyDown(gl::eKey::DOWN)) {
+      camera.transform.Rotate(-dphi, camera.transform.CalculateRight());
+    }
+
     glm::mat4 mvp = camera.CalculatePerspectiveMatrix() *
-                    camera.CalculateViewMatrix();
+                    camera.CalculateViewMatrix() * model;
 
     program.SetUniform("mvp", mvp);
 
     context.PollEvents();
     context.Clear();
-    context.DrawIndexed(vao, gl::ePrimitive::TRIANGLES, 0, vertices.size());
+    context.DrawArray(vao, gl::ePrimitive::TRIANGLES, 0, vertices.size());
     window.SwapBuffers();
   }
 
