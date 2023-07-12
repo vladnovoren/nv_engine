@@ -32,7 +32,6 @@ void VertexArray::AddVertexBuffer(const VertexBuffer& buffer) {
 void VertexArray::SetIndexBuffer(const IndexBuffer& buffer) {
   Bind();
   buffer.Bind();
-  ebo_id_ = buffer;
 }
 
 void VertexArray::BindAttribute(const BufferAttribute& attribute,

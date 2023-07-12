@@ -4,11 +4,28 @@
 
 using namespace nv_engine::gl;
 
-Texture2D::Texture2D(const fs::path& path) {
-	stbi_set_flip_vertically_on_load(1);
+TextureType nv_engine::gl::AssimpToNVTextureType(aiTextureType type) {
+  switch (type) {
+    case aiTextureType_NONE:
+      return TextureType::NONE;
+    case aiTextureType_DIFFUSE:
+      return TextureType::DIFFUSE;
+    case aiTextureType_SPECULAR:
+      return TextureType::SPECULAR;
+    case aiTextureType_AMBIENT:
+      return TextureType::AMBIENT;
+    case aiTextureType_NORMALS:
+      return TextureType::NORMALS;
+    default:
+      throw std::runtime_error("this texture type is not supported");
+  };
+}
+
+Texture2D::Texture2D(const fs::path& path, TextureType type) : type_(type) {
+  stbi_set_flip_vertically_on_load(1);
 
   int i_width = 0, i_height = 0, n_channels = 0;
-	auto data = stbi_load(path.c_str(), &i_width, &i_height, &n_channels, 0);
+  auto data = stbi_load(path.c_str(), &i_width, &i_height, &n_channels, 0);
   if (data == nullptr) {
     throw std::runtime_error("error loading texture file: " + path.string());
   }
@@ -58,4 +75,33 @@ uint32_t Texture2D::Id() const {
 
 void Texture2D::Bind(uint32_t unit) {
   glBindTextureUnit(unit, texture_id_);
+}
+
+fs::path Texture2D::GetDefaultTexturePath(TextureType type) {
+  switch (type) {
+    case TextureType::NONE:
+    case TextureType::DIFFUSE:
+    case TextureType::SPECULAR:
+    case TextureType::AMBIENT:
+      return "../assets/textures/default/blank.png";
+    case TextureType::NORMALS:
+      return "../assets/textures/default/blank_normal.png";
+  }
+  return "";
+}
+
+std::string Texture2D::GetSamplerName() const {
+  switch (type_) {
+    case TextureType::NONE:
+      return "uAmbientMap";
+    case TextureType::DIFFUSE:
+      return "uAmbientMap";
+    case TextureType::SPECULAR:
+      return "uAmbientMap";
+    case TextureType::AMBIENT:
+      return "uAmbientMap";
+    case TextureType::NORMALS:
+      return "uAmbientMap";
+  }
+  return "";
 }

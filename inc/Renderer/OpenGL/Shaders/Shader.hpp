@@ -30,13 +30,13 @@ namespace nv_engine::gl {
   }
 
   class Shader {
-   public:
+    public:
     Shader(ShaderType type, const std::filesystem::path& path);
 
     operator unsigned int() const;
     ShaderType Type() const;
 
-   protected:
+    protected:
     static std::string ReadSource(const std::filesystem::path& path);
 
     void Compile(std::string source);
@@ -45,4 +45,4 @@ namespace nv_engine::gl {
     unsigned int shader_id_ = 0;
     ShaderType type_;
   };
-} // namespace nv_engine::gl
+}

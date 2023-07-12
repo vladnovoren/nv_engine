@@ -7,23 +7,23 @@
 #include "Input.hpp"
 
 namespace nv_engine::gl {
-  class Context;
+class Context;
 
-  class Window {
-   public:
-    Window(int width, int height, const std::string& title);
+class Window {
+ public:
+  Window(int width, int height, const std::string& title);
 
-    void SwapBuffers();
+  void SwapBuffers();
 
-    bool ShouldClose();
+  bool ShouldClose();
 
-    bool IsKeyDown(eKey key);
+  bool IsKeyDown(eKey key);
 
-    bool IsMouseButtonDown(eMouseButton mouse_button);
+  bool IsMouseButtonDown(eMouseButton mouse_button);
 
-   private:
-    GLFWwindow* glfw_window_ = nullptr;
+ private:
+  GLFWwindow* glfw_window_ = nullptr;
 
-    friend class Context;
-  };
+  friend class Context;
+};
 } // namespace nv_engine::gl

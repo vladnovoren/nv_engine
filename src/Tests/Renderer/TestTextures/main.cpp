@@ -14,7 +14,7 @@ int main() {
   context.SwitchTo();
 
   std::vector<glm::vec3> positions{
-    {-1.0f, -1.0f, -1.0f}, 
+    {-1.0f, -1.0f, -1.0f},
     {-1.0f, -1.0f,  1.0f},
     {-1.0f,  1.0f,  1.0f},
     { 1.0f,  1.0f, -1.0f},
@@ -115,8 +115,9 @@ int main() {
   vao.AddVertexBuffer(vbo_positions);
   vao.AddVertexBuffer(vbo_textures_uv);
 
-  gl::Texture2D texture("../src/Tests/Renderer/TestTextures/uvtemplate.bmp");
-  program.SetUniform("texture_sampler", 0);
+  gl::Texture2D texture("../src/Tests/Renderer/TestTextures/uvtemplate.bmp",
+                        gl::TextureType::NONE);
+  program.SetUniform(texture.GetSamplerName(), 0);
   texture.Bind(0);
 
   PerspectiveCamera camera;
@@ -145,10 +146,10 @@ int main() {
     }
 
     if (window.IsKeyDown(gl::eKey::LEFT)) {
-      camera.transform.Rotate(dphi, camera.transform.CalculateUp());
+      camera.transform.Rotate(dphi, kUp);
     }
     if (window.IsKeyDown(gl::eKey::RIGHT)) {
-      camera.transform.Rotate(-dphi, camera.transform.CalculateUp());
+      camera.transform.Rotate(-dphi, kUp);
     }
     if (window.IsKeyDown(gl::eKey::UP)) {
       camera.transform.Rotate(dphi, camera.transform.CalculateRight());

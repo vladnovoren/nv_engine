@@ -18,6 +18,3 @@ void IndexBuffer::Unbind() const {
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
-IndexBuffer::operator unsigned int() const {
-  return ebo_id_;
-}
