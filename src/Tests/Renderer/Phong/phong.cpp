@@ -90,8 +90,7 @@ int main() {
   PerspectiveCamera camera;
   camera.transform.position = glm::vec3(0, 0, 100.f);
 
-  float ds = 0.5;
-  float dphi = 0.012;
+  float ds = 0.5, dphi = 0.012;
 
   glm::mat4 model = glm::scale(glm::identity<glm::mat4>(), glm::vec3(10));
 
