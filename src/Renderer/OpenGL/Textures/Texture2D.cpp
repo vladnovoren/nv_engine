@@ -82,6 +82,7 @@ fs::path Texture2D::GetDefaultTexturePath(TextureType type) {
     case TextureType::NONE:
     case TextureType::DIFFUSE:
     case TextureType::SPECULAR:
+    case TextureType::ALBEDO:
     case TextureType::AMBIENT:
       return "../assets/textures/default/blank.png";
     case TextureType::NORMALS:
@@ -93,15 +94,17 @@ fs::path Texture2D::GetDefaultTexturePath(TextureType type) {
 std::string Texture2D::GetSamplerName() const {
   switch (type_) {
     case TextureType::NONE:
-      return "uAmbientMap";
+      return "uNoneMap";
     case TextureType::DIFFUSE:
-      return "uAmbientMap";
+      return "uDiffuseMap";
     case TextureType::SPECULAR:
-      return "uAmbientMap";
+      return "uSpecularMap";
     case TextureType::AMBIENT:
       return "uAmbientMap";
     case TextureType::NORMALS:
-      return "uAmbientMap";
+      return "uNormalMap";
+    case TextureType::ALBEDO:
+      return "uAlbedoMap";
   }
   return "";
 }

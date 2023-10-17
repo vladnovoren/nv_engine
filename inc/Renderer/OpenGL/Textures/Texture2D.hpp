@@ -11,6 +11,7 @@ namespace nv_engine::gl {
   enum class TextureType {
     NONE,
     DIFFUSE,
+    ALBEDO,
     SPECULAR,
     AMBIENT,
     NORMALS
@@ -23,15 +24,14 @@ namespace nv_engine::gl {
     Texture2D(const fs::path& path, TextureType type);
     ~Texture2D();
 
-    uint32_t Width() const;
-    uint32_t Height() const;
+    [[nodiscard]] uint32_t Width() const;
+    [[nodiscard]] uint32_t Height() const;
 
-    uint32_t Id() const;
+    [[nodiscard]] uint32_t Id() const;
 
     void Bind(uint32_t unit);
-    void Bind();
 
-    std::string GetSamplerName() const;
+    [[nodiscard]] std::string GetSamplerName() const;
 
    public:
     static fs::path GetDefaultTexturePath(TextureType type);

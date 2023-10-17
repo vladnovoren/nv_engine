@@ -10,7 +10,7 @@ class Material {
   template <typename... ArgsT>
   void AddTexture(ArgsT&&... args);
 
-  const std::vector<Texture2D>& GetTextures() const;
+  [[nodiscard]] const std::vector<Texture2D>& GetTextures() const;
 
  private:
   std::vector<Texture2D> textures_;

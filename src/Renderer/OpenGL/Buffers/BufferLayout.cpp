@@ -27,9 +27,9 @@ size_t BufferLayout::GetStride() const {
 
 void BufferLayout::CalcOffsetsAndStride() {
   size_t offset = 0;
-  for (size_t attr_num = 0; attr_num < attributes_.size(); ++attr_num) {
-    attributes_[attr_num].offset = offset;
-    offset += attributes_[attr_num].size;
+  for (auto & attribute : attributes_) {
+    attribute.offset = offset;
+    offset += attribute.size;
   }
   stride_ = offset;
 }

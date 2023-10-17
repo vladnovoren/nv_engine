@@ -1,10 +1,5 @@
-#include "Buffers/Types.hpp"
 #include "Renderer_OpenGL.hpp"
-#include <glm/ext/matrix_transform.hpp>
-#include <glm/geometric.hpp>
-#include <iostream>
 #include "Core/Camera/PerspectiveCamera.hpp"
-#include "Textures/Texture2D.hpp"
 
 using namespace nv_engine;
 

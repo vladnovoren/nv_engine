@@ -18,18 +18,18 @@ struct BufferAttribute {
 class BufferLayout {
  public:
   BufferLayout() = default;
-  BufferLayout(std::vector<BufferAttribute> attributes);
+  explicit BufferLayout(std::vector<BufferAttribute> attributes);
 
   void SetAttributes(std::vector<BufferAttribute> attributes);
-  const std::vector<BufferAttribute>& GetAttributes() const;
+  [[nodiscard]] const std::vector<BufferAttribute>& GetAttributes() const;
 
-  size_t GetStride() const;
+  [[nodiscard]] size_t GetStride() const;
 
  private:
   void CalcOffsetsAndStride();
 
  private:
   std::vector<BufferAttribute> attributes_;
-  size_t stride_;
+  size_t stride_{};
 };
 }

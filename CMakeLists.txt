@@ -85,6 +85,8 @@ target_sources(RendererOpenGL PUBLIC
 )
 
 target_link_libraries(RendererOpenGL ${OpenGL_libs})
+target_link_libraries(RendererOpenGL Core)
+target_link_libraries(nv_engine PUBLIC RendererOpenGL)
 
 add_executable(test_VAO)
 target_sources(test_VAO PUBLIC
@@ -98,5 +100,9 @@ target_sources(test_textures PUBLIC
 )
 target_link_libraries(test_textures PUBLIC nv_engine)
 
-target_link_libraries(RendererOpenGL Core)
-target_link_libraries(nv_engine PUBLIC RendererOpenGL)
+add_executable(test_phong)
+target_sources(test_phong PUBLIC
+  src/Tests/Renderer/Phong/phong.cpp
+)
+target_link_libraries(test_phong PUBLIC nv_engine)
+

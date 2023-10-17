@@ -12,7 +12,6 @@ class VertexBuffer {
   ~VertexBuffer();
 
   void Bind() const;
-  void Unbind() const;
 
   template <typename T>
   void BufferData(const std::vector<T>& vertices) {
@@ -22,7 +21,7 @@ class VertexBuffer {
   }
 
   void SetLayout(BufferLayout layout);
-  const BufferLayout& GetLayout() const;
+  [[nodiscard]] const BufferLayout& GetLayout() const;
 
  private:
   BufferHandle vbo_id_;

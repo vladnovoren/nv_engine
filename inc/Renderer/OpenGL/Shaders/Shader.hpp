@@ -34,7 +34,7 @@ namespace nv_engine::gl {
     Shader(ShaderType type, const std::filesystem::path& path);
 
     operator unsigned int() const;
-    ShaderType Type() const;
+    [[nodiscard]] ShaderType Type() const;
 
     protected:
     static std::string ReadSource(const std::filesystem::path& path);
