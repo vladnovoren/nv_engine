@@ -24,13 +24,12 @@ void main() {
     float k_diff = max(dot(normal, -light_dir), 0.0);
     vec3 diffuse = k_diff * light_color;
 
-    float specular_strength = 0.5;
+    float specular_strength = 1;
     vec3 to_view = normalize(view_position - frag_position);
     vec3 light_reflect = reflect(light_dir, normal);
-    float k_specular = pow(max(dot(to_view, light_reflect), 0.0), 32);
+    float k_specular = pow(max(dot(to_view, light_reflect), 0.0), 20);
     vec3 specular = specular_strength * k_specular * light_color;
 
     vec3 result = (ambient + diffuse + specular) * texture(uAlbedoMap, frag_uv).rgb;
-//    frag_color = vec4(texture(uAlbedoMap, frag_uv).rgb, 1.0);
     frag_color = vec4(result, 1.0);
 }

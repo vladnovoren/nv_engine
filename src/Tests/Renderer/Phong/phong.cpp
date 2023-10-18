@@ -100,15 +100,10 @@ int main() {
 
   glm::mat4 model = glm::scale(glm::identity<glm::mat4>(), glm::vec3(10));
 
-  glm::vec3 light_color = glm::vec3(1, 1, 1);
-  glm::vec3 light_position = glm::vec3(0, 0, 50);
+  glm::vec3 light_color = glm::vec3(0.8, 0.8, 1);
+  glm::vec3 light_position = glm::vec3(800, 800, 800);
 
-  context.ClearColor(glm::vec4(light_color, 1.0));
-
-  program.SetUniform("light_color", light_color);
-  program.SetUniform("light_position", light_position);
-
-  program.SetUniform("view_position", camera.transform.position);
+  context.ClearColor(glm::vec4(0.0));
 
   float light_angle = 0.0f;
   auto prev_time(hr_time::now());
@@ -158,8 +153,12 @@ int main() {
     glm::mat4 rotateZ = glm::rotate(glm::mat4(1), light_angle, glm::vec3(0, 0, 1));
 
     glm::vec3 curr_light_position = rotateZ * rotateY * rotateX * glm::vec4(light_position, 1.0);
+    curr_light_position = light_position;
 
+    program.SetUniform("light_color", light_color);
     program.SetUniform("light_position", curr_light_position);
+
+    program.SetUniform("view_position", camera.transform.position);
 
     program.SetUniform("model", model);
     program.SetUniform("view", view);
