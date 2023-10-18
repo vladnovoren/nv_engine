@@ -20,3 +20,4 @@ void main() {
 
     frag_normal = mat3(transpose(inverse(model))) * normal; // normal vectors must be transformed in a different way than position vectors
 }
+
