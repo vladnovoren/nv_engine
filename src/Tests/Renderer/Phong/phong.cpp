@@ -101,7 +101,7 @@ int main() {
   glm::mat4 model = glm::scale(glm::identity<glm::mat4>(), glm::vec3(10));
 
   glm::vec3 light_color = glm::vec3(1, 1, 1);
-  glm::vec3 light_position = glm::vec3(0, 0, 100);
+  glm::vec3 light_position = glm::vec3(0, 0, 50);
 
   context.ClearColor(glm::vec4(light_color, 1.0));
 
@@ -148,20 +148,18 @@ int main() {
 
     auto curr_time(hr_time::now());
     auto dur = curr_time - prev_time;
-    light_angle += 0.01 * 0.001 * std::chrono::duration_cast<ms>(dur).count();
+    light_angle += 0.001 * std::chrono::duration_cast<ms>(dur).count();
     if (light_angle > 2 * M_PI)
       light_angle -= 2 * M_PI;
-    //std::cout << light_angle << '\n';
     prev_time = curr_time;
 
     glm::mat4 rotateX = glm::rotate(glm::mat4(1), light_angle, glm::vec3(1, 0, 0));
-    //glm::mat4 rotateY = glm::rotate(glm::mat4(1), light_angle, glm::vec3(0, 1, 0));
-    //glm::mat4 rotateZ = glm::rotate(glm::mat4(1), -light_angle, glm::vec3(0, 0, 1));
+    glm::mat4 rotateY = glm::rotate(glm::mat4(1), light_angle, glm::vec3(0, 1, 0));
+    glm::mat4 rotateZ = glm::rotate(glm::mat4(1), light_angle, glm::vec3(0, 0, 1));
 
-    //light_position = rotateZ * rotateY * rotateX * glm::vec4(light_position, 1.0);
-    light_position = rotateX * glm::vec4(light_position, 1.0);
+    glm::vec3 curr_light_position = rotateZ * rotateY * rotateX * glm::vec4(light_position, 1.0);
 
-    program.SetUniform("light_position", light_position);
+    program.SetUniform("light_position", curr_light_position);
 
     program.SetUniform("model", model);
     program.SetUniform("view", view);
