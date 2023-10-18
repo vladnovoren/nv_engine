@@ -3,6 +3,8 @@
 uniform vec3 light_position;
 uniform vec3 light_color;
 
+uniform vec3 view_position;
+
 uniform sampler2D uAlbedoMap;
 
 in vec3 frag_position;
@@ -22,6 +24,12 @@ void main() {
     float k_diff = max(dot(normal, -light_dir), 0.0);
     vec3 diffuse = k_diff * light_color;
 
-    vec3 result = (ambient + diffuse) * texture(uAlbedoMap, frag_uv).rgb;
+    vec3 to_view = view_position - frag_position;
+    vec3 light_reflect = reflect(-light_dir, normal);
+    float k_specular = pow(max(dot(to_view, light_reflect), 0.0), 32);
+    vec3 specular = k_specular * light_color;
+
+    vec3 result = (ambient + diffuse + specular) * texture(uAlbedoMap, frag_uv).rgb;
+//    frag_color = vec4(texture(uAlbedoMap, frag_uv, 1.0));
     frag_color = vec4(result, 1.0);
 }

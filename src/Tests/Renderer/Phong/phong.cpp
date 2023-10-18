@@ -54,7 +54,7 @@ int main() {
                       "../src/Tests/Renderer/Phong/phong.frag");
   program.Use();
 
-  context.ClearColor(glm::vec4(0, 0, 0, 1));
+  context.ClearColor(glm::vec4(0.2, 0.7, 0.2, 1));
 
   gl::VertexBuffer vbo_positions;
   vbo_positions.SetLayout(gl::BufferLayout({
@@ -95,10 +95,12 @@ int main() {
   glm::mat4 model = glm::scale(glm::identity<glm::mat4>(), glm::vec3(10));
 
   glm::vec3 light_color = glm::vec3(0.1, 0.1, 0.9);
-  glm::vec3 light_position = glm::vec3(0, 100, 100);
+  glm::vec3 light_position = glm::vec3(300, 10000, 500);
 
   program.SetUniform("light_color", light_color);
   program.SetUniform("light_position", light_position);
+
+  program.SetUniform("view_position", camera.transform.position);
 
   while (!window.ShouldClose() && !window.IsKeyDown(gl::eKey::ESCAPE)) {
     context.Clear();

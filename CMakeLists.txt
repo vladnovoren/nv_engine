@@ -35,7 +35,13 @@ target_compile_options(Core PUBLIC
   -Wpedantic
   -Werror
 
+  -fsanitize=address
+
   -g
+)
+
+target_link_options(Core PUBLIC
+  -fsanitize=address
 )
 
 set(OpenGL_libs
@@ -59,7 +65,13 @@ target_compile_options(RendererOpenGL PRIVATE
   -Wpedantic
   -Werror
 
+  -fsanitize=address
+
   -g
+)
+
+target_compile_options(RendererOpenGL PRIVATE
+  -fsanitize=address
 )
 
 target_include_directories(RendererOpenGL PUBLIC ${RendererOpenGL_INCLUDE_DIRS})
