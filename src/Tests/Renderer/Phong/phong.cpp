@@ -1,8 +1,13 @@
 #include "Renderer_OpenGL.hpp"
+#include <iostream>
 #include "Core/Camera/PerspectiveCamera.hpp"
 #include <chrono>
 
 using namespace nv_engine;
+
+using hr_time = std::chrono::high_resolution_clock;
+using ms = std::chrono::milliseconds;
+using s = std::chrono::seconds;
 
 int main() {
   gl::Window window(800, 600, "Phong Cube");
@@ -106,7 +111,7 @@ int main() {
   program.SetUniform("view_position", camera.transform.position);
 
   float light_angle = 0.0f;
-  auto prev_time(std::chrono::steady_clock::now());
+  auto prev_time(hr_time::now());
 
   while (!window.ShouldClose() && !window.IsKeyDown(gl::eKey::ESCAPE)) {
     context.Clear();
@@ -141,10 +146,12 @@ int main() {
     glm::mat4 view = camera.CalculateViewMatrix();
     glm::mat4 projection = camera.CalculatePerspectiveMatrix();
 
-    auto curr_time(std::chrono::steady_clock::now());
-    light_angle += 0.001 * std::chrono::duration<double>(curr_time - prev_time).count();
+    auto curr_time(hr_time::now());
+    auto dur = curr_time - prev_time;
+    light_angle += 0.01 * 0.001 * std::chrono::duration_cast<ms>(dur).count();
     if (light_angle > 2 * M_PI)
       light_angle -= 2 * M_PI;
+    //std::cout << light_angle << '\n';
     prev_time = curr_time;
 
     glm::mat4 rotateX = glm::rotate(glm::mat4(1), light_angle, glm::vec3(1, 0, 0));
