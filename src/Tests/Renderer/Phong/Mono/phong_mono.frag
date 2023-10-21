@@ -43,6 +43,6 @@ void main() {
   vec3 to_view = normalize(view_position - frag_position);
   vec3 light_dir = normalize(frag_position - light_position);
 
-  color.rgb = GetPhong(normal, to_view, light_dir, 0.3, 30.0);
+  color.rgb = GetPhong(normal, to_view, light_dir, 0.3, 32.0);
   color.a = 1.0;
 }
