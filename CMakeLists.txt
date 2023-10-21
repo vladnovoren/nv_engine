@@ -118,3 +118,8 @@ target_sources(test_phong PUBLIC
 )
 target_link_libraries(test_phong PUBLIC nv_engine)
 
+add_executable(test_phong_mono)
+target_sources(test_phong_mono PUBLIC
+  src/Tests/Renderer/Phong/Mono/phong_mono.cpp
+)
+target_link_libraries(test_phong_mono PUBLIC nv_engine)

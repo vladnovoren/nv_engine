@@ -1,3 +1,4 @@
+#include "Buffers/BufferLayout.hpp"
 #include "Renderer_OpenGL.hpp"
 #include <iostream>
 #include "Core/Camera/PerspectiveCamera.hpp"
@@ -9,64 +10,76 @@ using hr_time = std::chrono::high_resolution_clock;
 using ms = std::chrono::milliseconds;
 using s = std::chrono::seconds;
 
+struct Vertex {
+  glm::vec3 position;
+  glm::vec3 normal;
+};
+
 int main() {
   gl::Window window(800, 600, "Phong Cube");
   gl::Context context(window);
   context.SwitchTo();
 
-  std::vector<glm::vec3> positions{
-      {-1.0f, -1.0f, -1.0f}, {-1.0f, -1.0f,  1.0f}, {-1.0f,  1.0f,  1.0f},
-      {-1.0f, -1.0f, -1.0f}, {-1.0f,  1.0f,  1.0f}, {-1.0f,  1.0f, -1.0f},
+  std::vector<Vertex> vertices{
+    {{-0.5f, -0.5f, -0.5f}, {0.0f,  0.0f, -1.0f}},
+    {{ 0.5f, -0.5f, -0.5f}, {0.0f,  0.0f, -1.0f}},
+    {{ 0.5f,  0.5f, -0.5f}, {0.0f,  0.0f, -1.0f}},
+    {{ 0.5f,  0.5f, -0.5f}, {0.0f,  0.0f, -1.0f}},
+    {{-0.5f,  0.5f, -0.5f}, {0.0f,  0.0f, -1.0f}},
+    {{-0.5f, -0.5f, -0.5f}, {0.0f,  0.0f, -1.0f}},
 
-      { 1.0f, -1.0f, -1.0f}, { 1.0f, -1.0f,  1.0f}, { 1.0f,  1.0f,  1.0f},
-      { 1.0f, -1.0f, -1.0f}, { 1.0f,  1.0f,  1.0f}, { 1.0f,  1.0f, -1.0f},
+    {{-0.5f, -0.5f,  0.5f}, {0.0f,  0.0f,  1.0f}},
+    {{ 0.5f, -0.5f,  0.5f}, {0.0f,  0.0f,  1.0f}},
+    {{ 0.5f,  0.5f,  0.5f}, {0.0f,  0.0f,  1.0f}},
+    {{ 0.5f,  0.5f,  0.5f}, {0.0f,  0.0f,  1.0f}},
+    {{-0.5f,  0.5f,  0.5f}, {0.0f,  0.0f,  1.0f}},
+    {{-0.5f, -0.5f,  0.5f}, {0.0f,  0.0f,  1.0f}},
 
+    {{-0.5f,  0.5f,  0.5f}, {-1.0f,  0.0f,  0.0f}},
+    {{-0.5f,  0.5f, -0.5f}, {-1.0f,  0.0f,  0.0f}},
+    {{-0.5f, -0.5f, -0.5f}, {-1.0f,  0.0f,  0.0f}},
+    {{-0.5f, -0.5f, -0.5f}, {-1.0f,  0.0f,  0.0f}},
+    {{-0.5f, -0.5f,  0.5f}, {-1.0f,  0.0f,  0.0f}},
+    {{-0.5f,  0.5f,  0.5f}, {-1.0f,  0.0f,  0.0f}},
 
+    {{0.5f,  0.5f,  0.5f}, {1.0f,  0.0f,  0.0f}},
+    {{0.5f,  0.5f, -0.5f}, {1.0f,  0.0f,  0.0f}},
+    {{0.5f, -0.5f, -0.5f}, {1.0f,  0.0f,  0.0f}},
+    {{0.5f, -0.5f, -0.5f}, {1.0f,  0.0f,  0.0f}},
+    {{0.5f, -0.5f,  0.5f}, {1.0f,  0.0f,  0.0f}},
+    {{0.5f,  0.5f,  0.5f}, {1.0f,  0.0f,  0.0f}},
+
+    {{-0.5f, -0.5f, -0.5f}, {0.0f, -1.0f,  0.0f}},
+    {{ 0.5f, -0.5f, -0.5f}, {0.0f, -1.0f,  0.0f}},
+    {{ 0.5f, -0.5f,  0.5f}, {0.0f, -1.0f,  0.0f}},
+    {{ 0.5f, -0.5f,  0.5f}, {0.0f, -1.0f,  0.0f}},
+    {{-0.5f, -0.5f,  0.5f}, {0.0f, -1.0f,  0.0f}},
+    {{-0.5f, -0.5f, -0.5f}, {0.0f, -1.0f,  0.0f}},
+
+    {{-0.5f,  0.5f, -0.5f}, {0.0f,  1.0f,  0.0f}},
+    {{ 0.5f,  0.5f, -0.5f}, {0.0f,  1.0f,  0.0f}},
+    {{ 0.5f,  0.5f,  0.5f}, {0.0f,  1.0f,  0.0f}},
+    {{ 0.5f,  0.5f,  0.5f}, {0.0f,  1.0f,  0.0f}},
+    {{-0.5f,  0.5f,  0.5f}, {0.0f,  1.0f,  0.0f}},
+    {{-0.5f,  0.5f, -0.5f}, {0.0f,  1.0f,  0.0f}}
   };
 
-  std::vector<glm::vec3> normals(positions.size());
-  for (size_t i = 0; i < normals.size(); i += 3) {
-    auto v1 = positions[i + 1] - positions[i];
-    auto v2 = positions[i + 2] - positions[i];
-    normals[i] = normals[i + 1] = normals[i + 2] =
-        glm::normalize(glm::cross(v1, v2));
-  }
-
-  gl::Program program("../src/Tests/Renderer/Phong/phong.vert",
-                      "../src/Tests/Renderer/Phong/phong.frag");
+  gl::Program program("../src/Tests/Renderer/Phong/Mono/phong_mono.vert",
+                      "../src/Tests/Renderer/Phong/Mono/phong_mono.frag");
   program.Use();
 
-
-  gl::VertexBuffer vbo_positions;
-  vbo_positions.SetLayout(gl::BufferLayout({
+  gl::VertexBuffer vbo_vertices;
+  vbo_vertices.SetLayout(gl::BufferLayout({
       gl::BufferAttribute(program.GetAttribLocation("position"),
-                          gl::eShaderDataT::FLOAT3)
-  }));
-  vbo_positions.BufferData(positions);
-
-  gl::VertexBuffer vbo_textures_uv;
-  vbo_textures_uv.SetLayout(gl::BufferLayout({
-      gl::BufferAttribute(program.GetAttribLocation("uv"),
-                          gl::eShaderDataT::FLOAT2)
-  }));
-  vbo_textures_uv.BufferData(textures_uv);
-
-  gl::VertexBuffer vbo_normals;
-  vbo_normals.SetLayout(gl::BufferLayout({
+                          gl::eShaderDataT::FLOAT3),
       gl::BufferAttribute(program.GetAttribLocation("normal"),
                           gl::eShaderDataT::FLOAT3)
   }));
-  vbo_normals.BufferData(normals);
+  vbo_vertices.BufferData(vertices);
+
 
   gl::VertexArray vao_cube;
-  vao_cube.AddVertexBuffer(vbo_positions);
-  vao_cube.AddVertexBuffer(vbo_textures_uv);
-  vao_cube.AddVertexBuffer(vbo_normals);
-
-  gl::Texture2D texture("../src/Tests/Renderer/TestTextures/uvtemplate.bmp",
-                        gl::TextureType::ALBEDO);
-  program.SetUniform(texture.GetSamplerName(), 0);
-  texture.Bind(0);
+  vao_cube.AddVertexBuffer(vbo_vertices);
 
   PerspectiveCamera camera;
   camera.transform.position = glm::vec3(0, 0, 100.f);
@@ -74,10 +87,10 @@ int main() {
   float speed = 2.5;
   float ds = 0.5 * speed, dphi = 0.012 * speed;
 
-  glm::mat4 model = glm::scale(glm::identity<glm::mat4>(), glm::vec3(10));
+  glm::mat4 model = glm::scale(glm::identity<glm::mat4>(), glm::vec3(20));
 
   glm::vec3 light_color = glm::vec3(0.8, 0.8, 1);
-  glm::vec3 light_position = glm::vec3(800, 800, 800);
+  glm::vec3 light_position = glm::vec3(0, 0, 800);
 
   context.ClearColor(glm::vec4(0.0));
 
@@ -117,6 +130,10 @@ int main() {
     glm::mat4 view = camera.CalculateViewMatrix();
     glm::mat4 projection = camera.CalculatePerspectiveMatrix();
 
+    program.SetUniform("model", model);
+    program.SetUniform("view", view);
+    program.SetUniform("projection", projection);
+
     auto curr_time(hr_time::now());
     auto dur = curr_time - prev_time;
     light_angle += 0.001 * std::chrono::duration_cast<ms>(dur).count();
@@ -136,11 +153,7 @@ int main() {
 
     program.SetUniform("view_position", camera.transform.position);
 
-    program.SetUniform("model", model);
-    program.SetUniform("view", view);
-    program.SetUniform("projection", projection);
-
-    context.DrawArray(vao_cube, gl::ePrimitive::TRIANGLES, 0, positions.size());
+    context.DrawArray(vao_cube, gl::ePrimitive::TRIANGLES, 0, vertices.size());
     window.SwapBuffers();
   }
 
